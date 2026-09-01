@@ -1,0 +1,153 @@
+programa
+{
+  inclua biblioteca Util --> u
+	inclua biblioteca Matematica --> mat
+	inclua biblioteca Texto --> txt
+	inclua biblioteca Calendario --> cal
+	
+	funcao inicio()
+	{
+		cadeia placaEntrada, placaPadrao, placaOculta, teclaSair, textoLinha
+		inteiro horaEntrada, minutoEntrada, numeroTicket, tempoInicio, tempoFim, tamanhoLinha
+		inteiro horaSaida, minutoSaida, minutosAdicionais, minutosTotais
+		real valorPorMinuto = 0.25
+		real tempoGastoSegundos, valorBruto, valorFinal
+		cadeia minutoEntradaTexto, minutoSaidaTexto
+
+		escreva(" SIMULADOR DE ESTACIONAMENTO \n")
+		escreva("ATENÇÃO-1 s real contará como 5 min de permanência no estacionamento desse simulador\n")
+    escreva("ATENÇÃO-a cada minuto simulado de permanencia será cobrado 0,25 reais\n")
+		escreva("Digite a placa do carro (ex: abc1234): ")
+		leia(placaEntrada)
+		
+
+		placaPadrao = txt.caixa_alta(placaEntrada) // Texto
+		placaOculta = txt.extrair_subtexto(placaPadrao, 3, 7) // Texto
+		
+	
+		horaEntrada = cal.hora_atual() // Calendario
+		minutoEntrada = cal.minuto_atual() // Calendario
+		
+    minutoEntradaTexto = "" + minutoEntrada 
+		se (txt.numero_caracteres(minutoEntradaTexto) == 1) {
+			minutoEntradaTexto = "0" + minutoEntradaTexto
+      }
+		
+		numeroTicket = u.sorteia(1000, 9999) // Util
+		
+		escreva("\nEmitindo o seu ticket...")
+		u.aguarde(1000) // Util
+		
+		limpa()
+
+    textoLinha = "======================================\n"
+		tamanhoLinha = txt.numero_caracteres(textoLinha) // Texto
+		para (inteiro i = 0; i < tamanhoLinha; i++) {
+			escreva(txt.extrair_subtexto(textoLinha, i, i + 1))
+			u.aguarde(40) // Util
+		}
+		
+		textoLinha = "          TICKET EMITIDO              \n"
+		tamanhoLinha = txt.numero_caracteres(textoLinha) // Texto
+		para (inteiro i = 0; i < tamanhoLinha; i++) {
+			escreva(txt.extrair_subtexto(textoLinha, i, i + 1))
+			u.aguarde(40) // Util
+		}
+		
+		textoLinha = "======================================\n"
+		tamanhoLinha = txt.numero_caracteres(textoLinha) // Texto
+		para (inteiro i = 0; i < tamanhoLinha; i++) {
+			escreva(txt.extrair_subtexto(textoLinha, i, i + 1))
+			u.aguarde(40) // Util
+		}
+		
+		escreva("TICKET Nº: ")
+		u.aguarde(100) // Util
+		escreva(numeroTicket, "\n")
+		
+		escreva("VEÍCULO  : ***-")
+		u.aguarde(100) // Util
+		escreva(placaOculta, "\n")
+		
+		escreva("ENTRADA  : ")
+		u.aguarde(100) // Util
+		escreva(horaEntrada, ":", minutoEntrada, "\n")
+		
+		textoLinha = "======================================\n"
+		tamanhoLinha = txt.numero_caracteres(textoLinha) // Texto
+		para (inteiro i = 0; i < tamanhoLinha; i++) {
+			escreva(txt.extrair_subtexto(textoLinha, i, i + 1))
+			u.aguarde(40) // Util
+		
+		tempoInicio = u.tempo_decorrido() 
+    }
+		
+		escreva("\nO seu tempo está rodando, aguarde alguns segundos na tela\n")
+		escreva("Quando desejar que o carro saia e o tempo pare, aperte a tecla ENTER: ")
+		leia(teclaSair)
+		
+	
+		tempoFim = u.tempo_decorrido() // Util
+		
+		
+		tempoGastoSegundos = (tempoFim - tempoInicio) /	1000.0
+		
+	
+		minutosTotais = mat.arredondar(tempoGastoSegundos * 5, 0) // Util
+		
+		
+		minutosAdicionais = minutoEntrada + minutosTotais
+		minutoSaida = minutosAdicionais % 60
+		horaSaida = horaEntrada + (minutosAdicionais / 60)
+		
+		
+		horaSaida = horaSaida % 24 
+		
+	
+		valorBruto = minutosTotais * valorPorMinuto
+		valorFinal = mat.maior_numero(valorBruto, 3.00) // Mat
+		valorFinal = mat.arredondar(valorFinal, 2) // Mat
+		
+		limpa()
+		textoLinha = "======================================\n"
+		tamanhoLinha = txt.numero_caracteres(textoLinha) // Texto
+		para (inteiro i = 0; i < tamanhoLinha; i++) {
+			escreva(txt.extrair_subtexto(textoLinha, i, i + 1))
+			u.aguarde(40) // Util
+		}
+		
+		textoLinha = "          RECIBO DO ESTACIONAMENTO             \n"
+		tamanhoLinha = txt.numero_caracteres(textoLinha) // Texto
+		para (inteiro i = 0; i < tamanhoLinha; i++) { 
+			escreva(txt.extrair_subtexto(textoLinha, i, i + 1))
+			u.aguarde(40) // Util
+		}
+		
+		textoLinha = "======================================\n"
+		tamanhoLinha = txt.numero_caracteres(textoLinha) // Texto
+		para (inteiro i = 0; i < tamanhoLinha; i++) {
+			escreva(txt.extrair_subtexto(textoLinha, i, i + 1))
+			u.aguarde(40) // Util
+		}
+		
+		escreva("TICKET: Nº ", numeroTicket, "\n")
+		u.aguarde(200) // Util
+		escreva("HORARIO DE ENTRADA : ", horaEntrada, ":", minutoEntrada, "\n")
+		u.aguarde(200) // Util
+		escreva("HORARIO DE SAÍDA   : ", horaSaida, ":", minutoSaida, "\n")
+		u.aguarde(200) // Util
+		escreva("TEMPO DE PERMANENCIA   : ", minutosTotais, " minutos\n")
+		u.aguarde(200) // Util
+		escreva("--------------------------------------\n")
+		u.aguarde(200) // Util
+		escreva("VALOR FINAL    : R$ ", valorFinal, "\n")
+		u.aguarde(200) // Util
+		
+		textoLinha = "======================================\n"
+		tamanhoLinha = txt.numero_caracteres(textoLinha) // Texto
+		para (inteiro i = 0; i < tamanhoLinha; i++) {
+			escreva(txt.extrair_subtexto(textoLinha, i, i + 1))
+			u.aguarde(40) // Util
+		}
+	}
+}
