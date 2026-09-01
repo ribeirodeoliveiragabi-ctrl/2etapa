@@ -1,0 +1,42 @@
+programa
+
+{
+
+funcao inicio()
+
+{
+
+cadeia senhaCorreta = "senha123"
+
+cadeia senhaDigitada = ""
+
+
+
+enquanto (senhaDigitada != senhaCorreta)
+
+{
+
+escreva("Digite a senha: ")
+
+leia(senhaDigitada)
+
+
+
+se (senhaDigitada != senhaCorreta)
+
+{
+
+escreva("\nSenha incorreta, tente novamente.\n\n")
+
+}
+
+}
+
+
+
+escreva("\nAcesso Liberado! Bem-vindo!")
+
+}
+
+}
+
